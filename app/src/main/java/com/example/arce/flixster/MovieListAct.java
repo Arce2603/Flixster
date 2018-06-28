@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.arce.flixster.model.Config;
 import com.example.arce.flixster.model.Movie;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -29,16 +30,14 @@ public class MovieListAct extends AppCompatActivity {
     public final  static String TAG= "MovieListAct";
 
     AsyncHttpClient client;
-    //parts needed for the IMG URL, base + size of poster
-    String ImgBaseUrl;
-    //size of the poster to be displayed, used as part of the url
-    String size;
     //list of movies
     ArrayList<Movie> movies;
     //recycler view
     RecyclerView rvMovies;
     // adapter wired to the recycler view
     MovieAdapter adapter;
+    //Config
+    Config conf;
 
 
     @Override
@@ -52,7 +51,8 @@ public class MovieListAct extends AppCompatActivity {
         //initializas the adapter -- movies array connect a layout manager and the adapter
         adapter = new MovieAdapter(movies);
 
-        //TODO check how this lines works
+
+        //check how this lines works
         rvMovies = (RecyclerView) findViewById(R.id.rvMovies);
         rvMovies.setLayoutManager(new LinearLayoutManager(this));
         rvMovies.setAdapter(adapter);
@@ -109,16 +109,11 @@ public class MovieListAct extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    //get main object IMAGES
-                    JSONObject Img = response.getJSONObject("images");
-                    //asigning the IMG base url , getting it from the IMG object requested above
-                    ImgBaseUrl= Img.getString("secure_base_url");
-                    //get poster size array form the Img object
-                    JSONArray sizeOpt= Img.getJSONArray("poster_sizes");
-                    //asign posters size #3 from the requeste Array sizeOpt
-                    size= sizeOpt.optString(3,"w342");
-
-                    Log.i(TAG, String.format("configuration loaded with %s BaseURL and %s PosterSize", ImgBaseUrl, size));
+                    conf = new Config(response);
+                    Log.i(TAG, String.format("configuration loaded with %s BaseURL and %s PosterSize", conf.getImgBaseUrl(), conf.getSize()));
+                    //Pass this config to movie adaptor
+                    // es por que se necesita desplegar correctamente en pantalla
+                    adapter.setConfig(conf);
 
                     //gt the list of movies currently playing
                     //called here to ensure confgiuration is done before adding the movie list
