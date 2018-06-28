@@ -1,6 +1,7 @@
 package com.example.arce.flixster;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 
 import com.example.arce.flixster.model.Config;
 import com.example.arce.flixster.model.Movie;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -87,7 +90,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
     }
 
     //create a viewHold as a static inner class
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         //track view objects
         ImageView ivPosterImage;
         ImageView ivBackdrop;
@@ -101,7 +104,21 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
             ivBackdrop = (ImageView) itemView.findViewById(R.id.ivBackdropImg);
             tvTitle = (TextView)itemView.findViewById(R.id.tvTitle);
             tvOverview = (TextView) itemView.findViewById(R.id.tvOverview);
+            itemView.setOnClickListener(this);
 
+        }
+
+        @Override
+        public void onClick(View view) {
+            int pos = getAdapterPosition();
+            if (pos != RecyclerView.NO_POSITION){
+                Movie mov = movies.get(pos);
+                Intent i = new Intent(context, MovieDetailAct.class);
+                // serialize the movie using parceler, use its short name as a key
+                i.putExtra(Movie.class.getSimpleName(), Parcels.wrap(mov));
+                // show the activity
+                context.startActivity(i);
+            }
         }
     }
 

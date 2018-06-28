@@ -1,0 +1,26 @@
+package com.example.arce.flixster;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+import com.example.arce.flixster.model.Movie;
+
+import org.parceler.Parcels;
+
+public class MovieDetailAct extends AppCompatActivity {
+
+    // the movie to display
+    Movie movie;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_movie_detail);
+        // unwrap the movie passed in via intent, using its simple name as a key
+        movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
+        Log.d("MovieDetailsActivity", String.format("Showing details for '%s'", movie.getTitle()));
+    }
+
+
+}
