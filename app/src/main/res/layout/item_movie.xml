@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="5dp"
+    android:background="#000000"
     android:layout_width="match_parent" android:layout_height="wrap_content">
 
     <ImageView
@@ -21,7 +22,8 @@
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/ivPoster"
         android:text="Movie Title"
-        android:textAppearance="@android:style/TextAppearance.Large" />
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:textColor="@android:color/background_light" />
 
     <TextView
         android:id="@+id/tvOverview"
@@ -29,6 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvTitleD"
         android:layout_toEndOf="@+id/ivPoster"
-        android:text="Overview" />
+        android:text="Overview"
+        android:textColor="@android:color/background_light" />
 
 </RelativeLayout>

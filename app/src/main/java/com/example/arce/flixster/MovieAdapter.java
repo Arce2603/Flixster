@@ -25,6 +25,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
     ArrayList<Movie> movies;
     Config config;
     Context context;
+
+    public  static final String imgUrl=" ";
     public MovieAdapter(ArrayList<Movie> movies) {
         this.movies = movies;
     }
@@ -76,7 +78,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
         GlideApp.with(context)
                 .load(imgUrl)
                 .transform(new RoundedCornersTransformation(15, 0))
-               // .into(ivImg);
                 .placeholder(placeholderID)
                 .error(placeholderID)
                 .into(imageview);
@@ -106,6 +107,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
             tvOverview = (TextView) itemView.findViewById(R.id.tvOverview);
             itemView.setOnClickListener(this);
 
+
         }
 
         @Override
@@ -116,6 +118,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
                 Intent i = new Intent(context, MovieDetailAct.class);
                 // serialize the movie using parceler, use its short name as a key
                 i.putExtra(Movie.class.getSimpleName(), Parcels.wrap(mov));
+                //
+                i.putExtra(imgUrl,config.getImgUrl(config.getBackdropsSize(),mov.getBackdrop()));
                 // show the activity
                 context.startActivity(i);
             }
