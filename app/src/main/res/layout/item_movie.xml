@@ -15,7 +15,7 @@
         />
 
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvTitleD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -27,7 +27,7 @@
         android:id="@+id/tvOverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvTitle"
+        android:layout_below="@+id/tvTitleD"
         android:layout_toEndOf="@+id/ivPoster"
         android:text="Overview" />
 
