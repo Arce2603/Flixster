@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,8 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
@@ -26,7 +29,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
     Config config;
     Context context;
 
-    public  static final String imgUrl=" ";
+    public static final String imgUrl=" ";
     public MovieAdapter(ArrayList<Movie> movies) {
         this.movies = movies;
     }
@@ -92,22 +95,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
 
     //create a viewHold as a static inner class
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        //track view objects
-        ImageView ivPosterImage;
-        ImageView ivBackdrop;
-        TextView tvTitle;
-        TextView tvOverview;
+        //track view objects_Butterknife implementation
+        @BindView(R.id.tvTitleD) TextView tvTitle;
+        @BindView(R.id.tvOverview) TextView tvOverview;
+        @Nullable @BindView(R.id.ivBackdropImg) ImageView ivBackdrop;
+        @Nullable @BindView(R.id.ivPoster) ImageView ivPosterImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            ivPosterImage = (ImageView)itemView.findViewById(R.id.ivPoster);
-            ivBackdrop = (ImageView) itemView.findViewById(R.id.ivBackdropImg);
-            tvTitle = (TextView)itemView.findViewById(R.id.tvTitleD);
-            tvOverview = (TextView) itemView.findViewById(R.id.tvOverview);
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
-
-
         }
 
         @Override

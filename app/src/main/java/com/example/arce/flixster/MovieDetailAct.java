@@ -12,6 +12,8 @@ import com.example.arce.flixster.model.Movie;
 
 import org.parceler.Parcels;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.example.arce.flixster.MovieAdapter.imgUrl;
@@ -22,11 +24,13 @@ public class MovieDetailAct extends AppCompatActivity {
     Movie movie;
 
     // the view objects
-    TextView tvTitle;
-    TextView tvOverview;
-    TextView tvDate;
-    ImageView ivVideo;
-    RatingBar rbVoteAverage;
+    @BindView(R.id.tvTitle) TextView tvTitle;
+    @BindView(R.id.tvOverview) TextView tvOverview;
+    @BindView(R.id.tvDate) TextView tvDate;
+
+    @BindView(R.id.ivVideo) ImageView ivVideo;
+    @BindView(R.id.rbVoteAv) RatingBar rbVoteAverage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,22 +39,17 @@ public class MovieDetailAct extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.action_bar);
         setContentView(R.layout.activity_movie_detail);
-        // resolve the view objects
-        tvTitle = (TextView) findViewById(R.id.tvTitle);
-        tvOverview = (TextView) findViewById(R.id.tvOverview);
-        tvDate= (TextView) findViewById(R.id.tvDate);
-        rbVoteAverage = (RatingBar) findViewById(R.id.rbVoteAv);
-        ivVideo=(ImageView)findViewById(R.id.ivVideo);
-
+        // resolve the view objects - Using Butterknife
+        ButterKnife.bind(this);
 
     // unwrap the movie passed in via intent, using its simple name as a key
         movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
         Log.d("MovieDetailsActivity", String.format("Showing details for '%s'", movie.getTitle()));
 
         // set the title and overview
-        tvTitle.setText(movie.getTitle());
-        tvOverview.setText(movie.getOverview());
         tvDate.setText(movie.getDate());
+        tvOverview.setText(movie.getOverview());
+        tvTitle.setText(movie.getTitle());
 
 
         GlideApp.with(this)
